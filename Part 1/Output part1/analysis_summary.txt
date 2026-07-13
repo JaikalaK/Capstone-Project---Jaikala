@@ -1,0 +1,10 @@
+PART 1 SUMMARY
+Initial shape: 54086 rows x 10 columns
+Final shape after deduplication: 53794 rows x 10 columns
+Removed duplicate rows: 146
+Most skewed column: y (skew=2.4458)
+Highest absolute Pearson pair: carat vs x (0.9754)
+Top-2 skew columns used for imputation: ['y', 'price']
+Highest mean group in aggregation: Premium
+Highest std group in aggregation: Premium
+Mean ratio (highest/lowest): 1.3237
