@@ -1,0 +1,6 @@
+Model,CV mean,CV std,Test AUC
+LogReg C=1.0,0.9975,0.0001,0.9974
+Decision Tree (d=5),0.9956,0.0007,0.9961
+Random Forest,0.9985,0.0002,0.9985
+Gradient Boosting,0.9985,0.0002,0.9984
+Best RF Pipeline,0.9986,-,0.9985

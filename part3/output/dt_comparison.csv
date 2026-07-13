@@ -1,0 +1,3 @@
+Model,Train acc,Test acc,Gap
+DT unconstrained,0.9999,0.9737,0.0262
+DT depth=5,0.972,0.971,0.001

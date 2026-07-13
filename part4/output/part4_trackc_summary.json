@@ -1,0 +1,84 @@
+{
+  "track": "C",
+  "mock_mode": true,
+  "system_prompt": "You are a model-prediction explanation assistant.\nReturn ONLY valid JSON matching exactly this schema:\n{\n  \"prediction_label\": \"string\",\n  \"confidence_level\": \"low|medium|high\",\n  \"top_reason\": \"string\",\n  \"second_reason\": \"string\",\n  \"next_step\": \"string\",\n  \"requires_human_review\": true|false\n}\nRules:\n- Do not include markdown, code fences, or extra keys.\n- Keep reasons concise and grounded in provided features and probability.\n- If probability >= 0.9 use confidence_level=\"high\".\n- If probability between 0.7 and 0.9 use confidence_level=\"medium\".\n- Else use confidence_level=\"low\".\n",
+  "user_prompt_template": "Feature values (already preprocessed numeric inputs):\n{feature_json}\n\nPredicted class: {pred_class}\nPredicted probability for class 1: {prob_class1:.4f}\n\nExplain this prediction as JSON only.",
+  "guardrail_tests": {
+    "pii_input_status": "blocked",
+    "clean_input_status": "passed",
+    "clean_input_raw": "{\"prediction_label\": \"above_median_price\", \"confidence_level\": \"low\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Use standard pricing workflow.\", \"requires_human_review\": true}"
+  },
+  "run_rows": [
+    {
+      "input_index": 1,
+      "features": "{\"carat\": 0.3, \"cut\": 4.0, \"color\": 6.0, \"clarity\": 7.0, \"depth\": 61.5, \"table\": 55.0, \"x\": 4.29, \"y\": 4.31, \"z\": 2.64}",
+      "predicted_class": 0,
+      "probability_class1": 0.0008,
+      "raw_llm_output_temp0": "{\"prediction_label\": \"below_median_price\", \"confidence_level\": \"low\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Use standard pricing workflow.\", \"requires_human_review\": false}",
+      "parsed_json_temp0": "{\"prediction_label\": \"below_median_price\", \"confidence_level\": \"low\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Use standard pricing workflow.\", \"requires_human_review\": false}",
+      "valid_json_temp0": "pass",
+      "guardrail_temp0": "passed"
+    },
+    {
+      "input_index": 2,
+      "features": "{\"carat\": 1.2, \"cut\": 3.0, \"color\": 4.0, \"clarity\": 3.0, \"depth\": 62.0, \"table\": 58.0, \"x\": 6.8, \"y\": 6.75, \"z\": 4.2}",
+      "predicted_class": 1,
+      "probability_class1": 1.0,
+      "raw_llm_output_temp0": "{\"prediction_label\": \"above_median_price\", \"confidence_level\": \"high\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Use standard pricing workflow.\", \"requires_human_review\": false}",
+      "parsed_json_temp0": "{\"prediction_label\": \"above_median_price\", \"confidence_level\": \"high\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Use standard pricing workflow.\", \"requires_human_review\": false}",
+      "valid_json_temp0": "pass",
+      "guardrail_temp0": "passed"
+    },
+    {
+      "input_index": 3,
+      "features": "{\"carat\": 1.8, \"cut\": 1.0, \"color\": 1.0, \"clarity\": 1.0, \"depth\": 63.5, \"table\": 61.0, \"x\": 7.65, \"y\": 7.6, \"z\": 4.85}",
+      "predicted_class": 1,
+      "probability_class1": 1.0,
+      "raw_llm_output_temp0": "{\"prediction_label\": \"above_median_price\", \"confidence_level\": \"high\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Use standard pricing workflow.\", \"requires_human_review\": false}",
+      "parsed_json_temp0": "{\"prediction_label\": \"above_median_price\", \"confidence_level\": \"high\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Use standard pricing workflow.\", \"requires_human_review\": false}",
+      "valid_json_temp0": "pass",
+      "guardrail_temp0": "passed"
+    }
+  ],
+  "temperature_ab": [
+    {
+      "input_index": 1,
+      "output_temp0": "{\"prediction_label\": \"below_median_price\", \"confidence_level\": \"low\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Use standard pricing workflow.\", \"requires_human_review\": false}",
+      "output_temp07": "{\"prediction_label\": \"below_median_price\", \"confidence_level\": \"low\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Route to standard catalog pricing with quick QA check.\", \"requires_human_review\": false}",
+      "valid_temp0": true,
+      "valid_temp07": true,
+      "key_difference": "content varies",
+      "guardrail_temp0": "passed",
+      "guardrail_temp07": "passed",
+      "error_temp0": null,
+      "error_temp07": null,
+      "parsed_temp07": "{\"prediction_label\": \"below_median_price\", \"confidence_level\": \"low\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Route to standard catalog pricing with quick QA check.\", \"requires_human_review\": false}"
+    },
+    {
+      "input_index": 2,
+      "output_temp0": "{\"prediction_label\": \"above_median_price\", \"confidence_level\": \"high\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Use standard pricing workflow.\", \"requires_human_review\": false}",
+      "output_temp07": "{\"prediction_label\": \"above_median_price\", \"confidence_level\": \"high\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Escalate to premium pricing analyst review.\", \"requires_human_review\": false}",
+      "valid_temp0": true,
+      "valid_temp07": true,
+      "key_difference": "content varies",
+      "guardrail_temp0": "passed",
+      "guardrail_temp07": "passed",
+      "error_temp0": null,
+      "error_temp07": null,
+      "parsed_temp07": "{\"prediction_label\": \"above_median_price\", \"confidence_level\": \"high\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Escalate to premium pricing analyst review.\", \"requires_human_review\": false}"
+    },
+    {
+      "input_index": 3,
+      "output_temp0": "{\"prediction_label\": \"above_median_price\", \"confidence_level\": \"high\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Use standard pricing workflow.\", \"requires_human_review\": false}",
+      "output_temp07": "{\"prediction_label\": \"above_median_price\", \"confidence_level\": \"high\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Escalate to premium pricing analyst review.\", \"requires_human_review\": false}",
+      "valid_temp0": true,
+      "valid_temp07": true,
+      "key_difference": "content varies",
+      "guardrail_temp0": "passed",
+      "guardrail_temp07": "passed",
+      "error_temp0": null,
+      "error_temp07": null,
+      "parsed_temp07": "{\"prediction_label\": \"above_median_price\", \"confidence_level\": \"high\", \"top_reason\": \"Size-related features strongly influence the model output.\", \"second_reason\": \"Quality-related encoded grades add secondary signal.\", \"next_step\": \"Escalate to premium pricing analyst review.\", \"requires_human_review\": false}"
+    }
+  ]
+}
